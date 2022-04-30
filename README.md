@@ -23,6 +23,7 @@ Debe tener instaladas las siguientes herramientas:
 Una vez tenga asignada una tarea del proyecto en Trello, puede contribuir a este repositorio siguiendo estos pasos:
 
 1. Cree un [fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) de este repositorio en Github, esto dejará una copia en su cuenta de Github.
+
 2. Clone su fork localmente.
 
    - Vaya a Github y navegue al fork de este repositorio.
@@ -45,6 +46,7 @@ Una vez tenga asignada una tarea del proyecto en Trello, puede contribuir a este
       ```
 
     - Revise el ejemplo `Dummy` si tiene dudas sobre como implementar el API.
+
 4. Haga una solicitud de cambios (también conocido como Pull Resuqet o PR) al repositorio principal. En este punto los cambios que hizo deben estar funcionando localmente.
 
    - Vaya a Github y navegue hasta el fork creado anteriormente.
