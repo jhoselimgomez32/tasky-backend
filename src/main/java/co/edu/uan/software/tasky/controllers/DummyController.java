@@ -40,8 +40,8 @@ public class DummyController {
      * @return Returns the dummy with an assigned PK
      */
     @PostMapping("/dummies")
-    public DummyEntity createDummy(@RequestBody DummyEntity dummy) {
-        return this.repo.save(dummy);
+    public ResponseEntity<DummyEntity> createDummy(@RequestBody DummyEntity dummy) {
+        return new ResponseEntity<>(this.repo.save(dummy), HttpStatus.CREATED);
     }
 
     /**

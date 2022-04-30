@@ -13,6 +13,17 @@ public class DummyEntity {
     private @Id @GeneratedValue Long id;
     private String dummyValue;
 
+    public DummyEntity() {}
+
+    public DummyEntity(String v) {
+        this.dummyValue = v;
+    }
+
+    @Override
+    public String toString() {
+        return "Dummy " + id + ":" + dummyValue;
+    }
+
     /**
      * @return @Id @GeneratedValue Long return the id
      */
