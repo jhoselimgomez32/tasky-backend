@@ -1,6 +1,6 @@
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9a79748fff724d02ba69da88b2af47a1)](https://www.codacy.com/gh/wjfatuan/tasky-backend/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=wjfatuan/tasky-backend&amp;utm_campaign=Badge_Grade)
-
 # Tasky
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9a79748fff724d02ba69da88b2af47a1)](https://www.codacy.com/gh/wjfatuan/tasky-backend/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=wjfatuan/tasky-backend&amp;utm_campaign=Badge_Grade)
 
 Backend (API REST) del proyecto Tasky del curso de Construcción de software. Esta aplicación está construida con Spring Boot y pernmita la interacción con las funcionalidades principales del API de Tasky: creación de tareas, registro de usuarios, oraganización de tareas y consulta de datos.
 
