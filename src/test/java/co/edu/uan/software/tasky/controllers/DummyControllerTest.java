@@ -96,6 +96,15 @@ public class DummyControllerTest {
     }
 
     @Test
+    public void updateNonExisting() throws Exception {
+        String url = "http://localhost:"+port+"/dummies/100";
+        HttpEntity<DummyEntity> request = new HttpEntity<>(new DummyEntity("Lorem Ipsum"));
+        ResponseEntity<DummyEntity> response = restTemplate.exchange(url, HttpMethod.PUT, request, DummyEntity.class);
+        assertEquals(404, response.getStatusCodeValue());
+        assertNull(response.getBody());
+    }
+
+    @Test
     public void deleteDummy() throws Exception {
         String url = "http://localhost:"+port+"/dummies/2";
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);

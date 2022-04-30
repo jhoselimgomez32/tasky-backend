@@ -34,4 +34,12 @@ jacocoTestReport {
         csv.required = false
 		xml.destination = file("${rootProject.projectDir}/build/jacocoTestReport.xml")
     }
+	afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                "co/edu/uan/**/TaskyApplication.class",
+                "**/config/*"
+            ])
+        }))
+    }
 }
