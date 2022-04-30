@@ -4,19 +4,19 @@
 
 Backend (API REST) del proyecto Tasky del curso de Construcción de software. Esta aplicación está construida con Spring Boot y pernmita la interacción con las funcionalidades principales del API de Tasky: creación de tareas, registro de usuarios, oraganización de tareas y consulta de datos.
 
-- [Requisitos](#requisitos)
-- [Como contribuir a este proyecto](#como-contribuir-a-este-repositorio)
-- [Estructura del proyecto](#estructura-del-proyecto)
-- [Compilar y ejecutar la aplicación](#compilar-y-ejecutar-su-aplicación)
+-  [Requisitos](#requisitos)
+-  [Como contribuir a este proyecto](#como-contribuir-a-este-repositorio)
+-  [Estructura del proyecto](#estructura-del-proyecto)
+-  [Compilar y ejecutar la aplicación](#compilar-y-ejecutar-su-aplicación)
 
 ## Requisitos
 
 Debe tener instaladas las siguientes herramientas:
 
-- [Visual Studio Code](https://code.visualstudio.com/) (u otro editor de su preferencia)
-- Java Development Kit 11
-- Gradle
-- [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+-  [Visual Studio Code](https://code.visualstudio.com/) (u otro editor de su preferencia)
+-  Java Development Kit 11
+-  Gradle
+-  [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
 
 ## Como contribuir a este repositorio
 
