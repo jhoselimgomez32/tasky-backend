@@ -9,6 +9,7 @@ Backend (API REST) del proyecto Tasky del curso de Construcción de software. Es
 - [Como contribuir a este proyecto](#como-contribuir-a-este-repositorio)
 - [Estructura del proyecto](#estructura-del-proyecto)
 - [Compilar y ejecutar la aplicación](#compilar-y-ejecutar-su-aplicación)
+- [Verificar la calidad del código](#verificar-la-calidad-del-código)
 
 ## Requisitos
 
@@ -97,3 +98,27 @@ Para probar de forma local su aplicación siga los siguientes pasos:
     ```bash
     curl -X GET http://localhost:8080/dummies
     ```
+
+## Verificar la calidad del código
+
+Puede verificar distintos atributos de calidad del código fuente del proyecto:
+
+- Google Java Code Style: Puede verificar el cumplimiento de estos estándares:
+
+  1. Ejecute el siguiente comando para generar el reporte de checkstyle:
+
+     ```bash
+     ./gradlew check
+     ```
+
+  2. Abra el reporte desde la carpeta `build/reports/checkstyle`.
+
+- Cobertura de pruebas:
+
+  1. Ejecute el siguiente comando para generar el reporte de pruebas:
+
+     ```bash
+     ./gradlew test
+     ```
+
+  2. Abra los reportes de pruebas desde la carpeta `build/reports/tests` y `build/reports/jacoco`.
