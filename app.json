@@ -1,0 +1,5 @@
+{
+    "name": "Tasky API",
+    "description": "The API for the Tasky App",
+    "keywords": ["java", "spring-boot", "uan"]
+  }
