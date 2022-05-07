@@ -91,14 +91,14 @@ Para probar de forma local su aplicación siga los siguientes pasos:
 3. Desde la terminal ejecute el siguiente comando para inciar el servidor de forma local:
 
    ```bash
-   ./gradlew bootRun
+   heroku local
    ```
 
 4. Ahora puede consumir el API usando su herramienta favorita. Se recomienda usar `curl` o **[Postman](https://www.postman.com/)**.
     - Por ejemplo, para insertar un nuevo dummy usando el API dummy de ejemplo, puede usar:
 
     ```bash
-    curl -X GET http://localhost:8080/dummies
+    curl -X GET http://localhost:5000/dummies
     ```
 
 ## Verificar la calidad del código
