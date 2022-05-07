@@ -1,0 +1,17 @@
+databaseChangeLog:  
+  -  changeSet:  
+      id:  v1  
+      author:  wjfatuan  
+      changes:  
+        -  createTable:  
+            tableName:  dummy  
+            columns:  
+              -  column:  
+                  name:  id  
+                  type:  varchar(32)  
+                  constraints:  
+                    primaryKey:  true  
+                    nullable:  false  
+              -  column:  
+                  name:  dummy_value  
+                  type:  varchar(256)  
