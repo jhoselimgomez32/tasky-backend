@@ -1,5 +1,13 @@
 {
     "name": "Tasky API",
     "description": "The API for the Tasky App",
-    "keywords": ["java", "spring-boot", "uan"]
+    "keywords": ["java", "spring-boot", "uan"],
+    "addons": [
+      {
+        "plan": "heroku-postgresql",
+        "options": {
+          "version": "14"
+        }
+      }
+    ]
   }
