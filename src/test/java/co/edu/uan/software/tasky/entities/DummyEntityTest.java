@@ -24,8 +24,8 @@ public class DummyEntityTest {
     @Test
     public void savedToString() {
         DummyEntity de = new DummyEntity("Lorem Ipsum");
-        String expected = "Dummy 1:Lorem Ipsum";
         repo.save(de);
+        String expected = "Dummy "+de.getId().toString()+":Lorem Ipsum";
         assertEquals(expected, de.toString());
     }
 }

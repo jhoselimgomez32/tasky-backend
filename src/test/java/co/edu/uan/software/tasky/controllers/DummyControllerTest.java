@@ -33,10 +33,16 @@ public class DummyControllerTest {
     @Autowired
     private DummyRepository repo;
 
+    DummyEntity dm1 = new DummyEntity("Singleton 1");
+    DummyEntity dm2 = new DummyEntity("Singleton 2");
+        
+
     @BeforeEach
     public void init() {
-        repo.save(new DummyEntity("Singleton"));
-        repo.save(new DummyEntity("Singleton"));
+        dm1 = repo.save(new DummyEntity("Singleton 1"));
+        dm2 = repo.save(new DummyEntity("Singleton 2"));
+        System.out.println(dm1);
+        System.out.println(dm2);
     }
 
     @Test
@@ -70,7 +76,7 @@ public class DummyControllerTest {
 
     @Test
     public void getDummy() throws Exception {
-        String url = "http://localhost:"+port+"/dummies/1";
+        String url = "http://localhost:"+port+"/dummies/"+dm1.getId().toString();
         ResponseEntity<DummyEntity> response = restTemplate.exchange(url, HttpMethod.GET, null, DummyEntity.class);
         assertEquals(200, response.getStatusCodeValue());
         assertNotNull(response.getBody());
@@ -78,7 +84,7 @@ public class DummyControllerTest {
 
     @Test
     public void getNonExistingDummy() throws Exception {
-        String url = "http://localhost:"+port+"/dummies/100";
+        String url = "http://localhost:"+port+"/dummies/8be63de2-a6d5-4a00-b441-102de43adbfa";
         ResponseEntity<DummyEntity> response = restTemplate.exchange(url, HttpMethod.GET, null, DummyEntity.class);
         assertEquals(404, response.getStatusCodeValue());
         assertNull(response.getBody());
@@ -86,7 +92,7 @@ public class DummyControllerTest {
 
     @Test
     public void updateDummy() throws Exception {
-        String url = "http://localhost:"+port+"/dummies/1";
+        String url = "http://localhost:"+port+"/dummies/"+dm1.getId().toString();
         HttpEntity<DummyEntity> request = new HttpEntity<>(new DummyEntity("Lorem Ipsum"));
         ResponseEntity<DummyEntity> response = restTemplate.exchange(url, HttpMethod.PUT, request, DummyEntity.class);
         assertEquals(200, response.getStatusCodeValue());
@@ -97,7 +103,7 @@ public class DummyControllerTest {
 
     @Test
     public void updateNonExisting() throws Exception {
-        String url = "http://localhost:"+port+"/dummies/100";
+        String url = "http://localhost:"+port+"/dummies/8be63de2-a6d5-4a00-b441-102de43adbfa";
         HttpEntity<DummyEntity> request = new HttpEntity<>(new DummyEntity("Lorem Ipsum"));
         ResponseEntity<DummyEntity> response = restTemplate.exchange(url, HttpMethod.PUT, request, DummyEntity.class);
         assertEquals(404, response.getStatusCodeValue());
@@ -106,7 +112,7 @@ public class DummyControllerTest {
 
     @Test
     public void deleteDummy() throws Exception {
-        String url = "http://localhost:"+port+"/dummies/2";
+        String url = "http://localhost:"+port+"/dummies/"+dm2.getId().toString();
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);
         assertEquals(200, response.getStatusCodeValue());
         assertNull(response.getBody());
@@ -114,7 +120,7 @@ public class DummyControllerTest {
 
     @Test
     public void deleteNonExistingDummy() throws Exception {
-        String url = "http://localhost:"+port+"/dummies/100";
+        String url = "http://localhost:"+port+"/dummies/8be63de2-a6d5-4a00-b441-102de43adbfa";
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);
         assertEquals(404, response.getStatusCodeValue());
         assertNull(response.getBody());

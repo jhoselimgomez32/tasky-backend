@@ -1,7 +1,10 @@
 package co.edu.uan.software.tasky.entities;
 
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -10,7 +13,7 @@ import javax.persistence.Id;
 @Entity(name = "dummy")
 public class DummyEntity {
 
-    private @Id @GeneratedValue Long id;
+    private @Id @GeneratedValue(strategy = GenerationType.AUTO) UUID id;
     private String dummyValue;
 
     public DummyEntity() {}
@@ -27,14 +30,14 @@ public class DummyEntity {
     /**
      * @return @Id @GeneratedValue Long return the id
      */
-    public @Id @GeneratedValue Long getId() {
+    public @Id @GeneratedValue UUID getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
