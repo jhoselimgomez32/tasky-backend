@@ -3,6 +3,8 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9a79748fff724d02ba69da88b2af47a1)](https://www.codacy.com/gh/wjfatuan/tasky-backend/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=wjfatuan/tasky-backend&amp;utm_campaign=Badge_Grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/9a79748fff724d02ba69da88b2af47a1)](https://www.codacy.com/gh/wjfatuan/tasky-backend/dashboard?utm_source=github.com&utm_medium=referral&utm_content=wjfatuan/tasky-backend&utm_campaign=Badge_Coverage)
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 Backend (API REST) del proyecto Tasky del curso de Construcción de software. Esta aplicación está construida con Spring Boot y pernmita la interacción con las funcionalidades principales del API de Tasky: creación de tareas, registro de usuarios, oraganización de tareas y consulta de datos.
 
 - [Requisitos](#requisitos)
@@ -89,14 +91,14 @@ Para probar de forma local su aplicación siga los siguientes pasos:
 3. Desde la terminal ejecute el siguiente comando para inciar el servidor de forma local:
 
    ```bash
-   ./gradlew bootRun
+   heroku local
    ```
 
 4. Ahora puede consumir el API usando su herramienta favorita. Se recomienda usar `curl` o **[Postman](https://www.postman.com/)**.
     - Por ejemplo, para insertar un nuevo dummy usando el API dummy de ejemplo, puede usar:
 
     ```bash
-    curl -X GET http://localhost:8080/dummies
+    curl -X GET http://localhost:5000/dummies
     ```
 
 ## Verificar la calidad del código

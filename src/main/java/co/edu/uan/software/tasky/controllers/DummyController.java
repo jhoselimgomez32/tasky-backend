@@ -1,6 +1,7 @@
 package co.edu.uan.software.tasky.controllers;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -58,7 +59,7 @@ public class DummyController {
      *         doesn't exist.
      */
     @GetMapping("/dummies/{id}")
-    public ResponseEntity<DummyEntity> findDummy(@PathVariable("id") Long dummyId) {
+    public ResponseEntity<DummyEntity> findDummy(@PathVariable("id") UUID dummyId) {
         return this.repo.findById(dummyId)
                 .map(result -> new ResponseEntity<>(result, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -72,7 +73,7 @@ public class DummyController {
      *         the entoty doesn't exist.
      */
     @PutMapping("/dummies/{id}")
-    public ResponseEntity<DummyEntity> updateDummy(@PathVariable("id") Long dummyId, @RequestBody DummyEntity dummy) {
+    public ResponseEntity<DummyEntity> updateDummy(@PathVariable("id") UUID dummyId, @RequestBody DummyEntity dummy) {
         if (repo.existsById(dummyId)) {
             dummy.setId(dummyId);
             return new ResponseEntity<DummyEntity>(repo.save(dummy), HttpStatus.OK);
@@ -87,7 +88,7 @@ public class DummyController {
      * @param dummy The dummy to be deleted
      */
     @DeleteMapping("/dummies/{id}")
-    public ResponseEntity<Object> deleteDummy(@PathVariable("id") Long dummyId) {
+    public ResponseEntity<Object> deleteDummy(@PathVariable("id") UUID dummyId) {
         try {
             repo.deleteById(dummyId);
             return new ResponseEntity<>(HttpStatus.OK);
