@@ -38,7 +38,7 @@ public class TagController {
     }
 
     /**
-     * @return Returns all the dummies in database.
+     * @return Returns all the tags in database.
      */
     @GetMapping("/tags")
     public List<TagEntity> findAllTags() {
@@ -64,7 +64,7 @@ public class TagController {
      * @return Returns the tag with all fields changed, or throws an exception if
      *         the entoty doesn't exist.
      */
-    @PutMapping("/dummies/{id}")
+    @PutMapping("/tag/{id}")
     public ResponseEntity<TagEntity> updateTag(@PathVariable("id") UUID tagId, @RequestBody TagEntity tag) {
         if (repository.existsById(tagId)) {
             tag.setId(tagId);
@@ -79,8 +79,8 @@ public class TagController {
      * 
      * @param tag The tag to be deleted
      */
-    @DeleteMapping("/dummies/{id}")
-    public ResponseEntity<Object> deleteDummy(@PathVariable("id") UUID tagId) {
+    @DeleteMapping("/tag/{id}")
+    public ResponseEntity<Object> deleteTag(@PathVariable("id") UUID tagId) {
         try {
             repository.deleteById(tagId);
             return new ResponseEntity<>(HttpStatus.OK);
