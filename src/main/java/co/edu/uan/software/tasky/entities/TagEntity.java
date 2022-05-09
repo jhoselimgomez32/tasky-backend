@@ -1,12 +1,14 @@
 package co.edu.uan.software.tasky.entities;
 
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity(name = "TAGS")
 public class TagEntity {
-    private @Id @GeneratedValue Long id;
+    private @Id @GeneratedValue UUID id;
     private String name;
     private String color;
 
@@ -15,11 +17,11 @@ public class TagEntity {
         this.color = color;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
