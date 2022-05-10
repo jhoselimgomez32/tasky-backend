@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import co.edu.uan.software.tasky.entities.TagEntity;
@@ -32,9 +33,26 @@ public class TagController {
      * @param tag The new tag
      * @return Returns the tag with an assigned PK
      */
-    @PostMapping("/tag")
+    @PostMapping("/tags")
     public ResponseEntity<TagEntity> createTag(@RequestBody TagEntity tag) {
-        return new ResponseEntity<>(repository.save(tag), HttpStatus.CREATED);
+
+        System.out.println(tag.color);
+        if (tag.color == null || tag.color == "") {
+            // create object of Random class
+            Random obj = new Random();
+            int rand_num = obj.nextInt(0xffffff + 1);
+
+            // format it as hexadecimal string and print
+            String colorCode = String.format("#%06x", rand_num);
+            System.out.println(colorCode);
+            tag.color = colorCode;
+        }
+        
+        if (tag.name == null || tag.name == "") {
+            return new ResponseEntity<>(tag, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(repository.save(tag), HttpStatus.CREATED);
+        }
     }
 
     /**
@@ -64,7 +82,7 @@ public class TagController {
      * @return Returns the tag with all fields changed, or throws an exception if
      *         the entoty doesn't exist.
      */
-    @PutMapping("/tag/{id}")
+    @PutMapping("/tags/{id}")
     public ResponseEntity<TagEntity> updateTag(@PathVariable("id") UUID tagId, @RequestBody TagEntity tag) {
         if (repository.existsById(tagId)) {
             tag.setId(tagId);
@@ -79,7 +97,7 @@ public class TagController {
      * 
      * @param tag The tag to be deleted
      */
-    @DeleteMapping("/tag/{id}")
+    @DeleteMapping("/tags/{id}")
     public ResponseEntity<Object> deleteTag(@PathVariable("id") UUID tagId) {
         try {
             repository.deleteById(tagId);
