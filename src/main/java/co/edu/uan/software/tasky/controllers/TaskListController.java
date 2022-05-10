@@ -45,12 +45,11 @@ public class TaskListController {
         Date date = new Date(System.currentTimeMillis());
         String name = taskList.getName();
         String userId = taskList.getUserId();
-        System.out.print("date "+date);
         taskList.setRegisterDate(date);
 
-         if (name.length() > 64){
+        if (name.length() > 64){
             return new ResponseEntity<>(taskList, HttpStatus.NOT_FOUND);
-         }else if(name.isEmpty() && userId.isEmpty()){
+        }else if(name.isEmpty() && userId.isEmpty()){
             return new ResponseEntity<>(taskList, HttpStatus.BAD_REQUEST);
         }
 
@@ -75,6 +74,14 @@ public class TaskListController {
         return this.repo.findById(taskListId)
                 .map(result -> new ResponseEntity<>(result, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/tasklist/userId/{userId}")
+    public ResponseEntity<TaskListEntity> findTaskListUserId(@PathVariable("userId") String userId) {
+        /* return this.repo.findById(taskListId)
+                .map(result -> new ResponseEntity<>(result, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)); */
+        return null;
     }
 
     /**
