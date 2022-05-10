@@ -36,8 +36,8 @@ public class TagController {
     @PostMapping("/tags")
     public ResponseEntity<TagEntity> createTag(@RequestBody TagEntity tag) {
 
-        System.out.println(tag.color);
-        if (tag.color == null || tag.color == "") {
+        System.out.println(tag.getColor());
+        if (tag.getColor().isEmpty() || tag.getColor().isBlank()) {
             // create object of Random class
             Random obj = new Random();
             int rand_num = obj.nextInt(0xffffff + 1);
@@ -45,11 +45,11 @@ public class TagController {
             // format it as hexadecimal string and print
             String colorCode = String.format("#%06x", rand_num);
             System.out.println(colorCode);
-            tag.color = colorCode;
+            tag.setColor(colorCode);
         }
-        
-        if (tag.name == null || tag.name == "") {
-            return new ResponseEntity<>(tag, HttpStatus.NOT_FOUND);
+
+        if (tag.getName().isEmpty() || tag.getName().isBlank()) {
+            return new ResponseEntity<>(tag, HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<>(repository.save(tag), HttpStatus.CREATED);
         }
