@@ -82,20 +82,31 @@ La siguiente tabla muestra la estructura de carpetas/paquetes del proyecto. **As
 Para probar de forma local su aplicación siga los siguientes pasos:
 
 1. Asegurese de que su código no contiene errores.
-2. Desde la terminal ejecute el siguiente comando para verificar que las pruebas funcionan:
+
+2. Modifique su archivo .env con los siguientes datos: 
 
    ```bash
-   ./gradlew test
+   SPRING_DATASOURCE_URL=jdbc:h2:mem:testdb
+   SPRING_DATASOURCE_USERNAME=username
+   SPRING_DATASOURCE_PASSWORD=password
+   SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.h2.Driver
+   LIQUIBASE_ENABLED=false
    ```
 
-3. Desde la terminal ejecute el siguiente comando para inciar el servidor de forma local:
+3. Desde la terminal ejecute el siguiente comando para verificar que las pruebas funcionan:
+
+   ```bash
+   ./gradlew build
+   ```
+
+4. Desde la terminal ejecute el siguiente comando para inciar el servidor de forma local:
 
    ```bash
    heroku local
    ```
 
-4. Ahora puede consumir el API usando su herramienta favorita. Se recomienda usar `curl` o **[Postman](https://www.postman.com/)**.
-    - Por ejemplo, para insertar un nuevo dummy usando el API dummy de ejemplo, puede usar:
+5. Ahora puede consumir el API usando su herramienta favorita. Se recomienda usar `curl` o **[Postman](https://www.postman.com/)**.
+    - Por ejemplo, para consultar los dummy usando el API dummy de ejemplo, puede usar:
 
     ```bash
     curl -X GET http://localhost:5000/dummies
