@@ -17,8 +17,10 @@ public class TaskListEntity {
 
     public TaskListEntity() {}
 
-    public TaskListEntity(String nameValue) {
+    public TaskListEntity(String nameValue, String userId, Date registerDate) {
         this.name = nameValue;
+        this.userId = userId;
+        this.registerDate = registerDate;
     }
 
     @Override

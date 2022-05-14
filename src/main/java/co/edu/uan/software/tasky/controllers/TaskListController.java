@@ -47,9 +47,9 @@ public class TaskListController {
         String userId = taskList.getUserId();
         taskList.setRegisterDate(date);
 
-        if (name.length() > 64){
+        if (name.length() > 64) {
             return new ResponseEntity<>(taskList, HttpStatus.NOT_FOUND);
-        }else if(name.isEmpty() && userId.isEmpty()){
+        } else if (name.isEmpty() && userId.isEmpty()) {
             return new ResponseEntity<>(taskList, HttpStatus.BAD_REQUEST);
         }
 
@@ -77,22 +77,24 @@ public class TaskListController {
     }
 
     @GetMapping("/tasklist/userId/{userId}")
-    public ResponseEntity<TaskListEntity> findTaskListUserId(@PathVariable("userId") String userId) {
-        /* return this.repo.findById(taskListId)
-                .map(result -> new ResponseEntity<>(result, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)); */
-        return null;
+    public List<TaskListEntity> findTaskListUserId(@PathVariable("userId") String userId) {
+        if (userId.isEmpty()) {
+            new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return this.repo.findByUserId(userId);
     }
 
     /**
      * Updates an existing taskList in the database
      * 
      * @param taskList The taskList to be updated
-     * @return Returns the taskList with all fields changed, or throws an exception if
+     * @return Returns the taskList with all fields changed, or throws an exception
+     *         if
      *         the entoty doesn't exist.
      */
     @PutMapping("/tasklist/{id}")
-    public ResponseEntity<TaskListEntity> updateTaskList(@PathVariable("id") UUID taskListId, @RequestBody TaskListEntity taskList) {
+    public ResponseEntity<TaskListEntity> updateTaskList(@PathVariable("id") UUID taskListId,
+            @RequestBody TaskListEntity taskList) {
         if (repo.existsById(taskListId)) {
             taskList.setId(taskListId);
             return new ResponseEntity<TaskListEntity>(repo.save(taskList), HttpStatus.OK);
@@ -115,5 +117,5 @@ public class TaskListController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    
+
 }
