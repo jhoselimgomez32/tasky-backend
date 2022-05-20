@@ -1,13 +1,15 @@
 package co.edu.uan.software.tasky.entities;
 
 import java.util.UUID;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name = "TAGS")
+/**
+ * Tag Entity, for task storage.
+ */
+@Entity(name = "tags")
 public class TagEntity {
     
     private @Id @GeneratedValue(strategy = GenerationType.AUTO) UUID id;
