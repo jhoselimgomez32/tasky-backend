@@ -1,39 +1,45 @@
 package co.edu.uan.software.tasky.entities;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name = "TASKLIST")
+@Entity(name = "tasklist")
 public class TaskListEntity {
-    private @Id @GeneratedValue(strategy = GenerationType.AUTO) UUID id;
+
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID uid;
+    @Column(name = "name", nullable = false)
     private String name;
-    private String userId;
-    private Date registerDate;
+    @Column(name = "user_id", nullable = false)
+    private String user_id;
+    @Column(name = "register_date")
+    private Timestamp register_date;
 
-    public TaskListEntity() {}
+    public TaskListEntity() {
+    }
 
-    public TaskListEntity(String nameValue, String userId, Date registerDate) {
-        this.name = nameValue;
-        this.userId = userId;
-        this.registerDate = registerDate;
+    public TaskListEntity(String name, String user_id) {
+        this.name = name;
+        this.user_id = user_id;
     }
 
     @Override
     public String toString() {
-        return "TaskList " + id + ":" + name;
+        return "TaskList : " + name;
     }
 
-    public @Id @GeneratedValue UUID getId() {
-        return id;
+    public UUID getId() {
+        return uid;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setId(UUID uid) {
+        this.uid = uid;
     }
 
     public String getName() {
@@ -45,19 +51,19 @@ public class TaskListEntity {
     }
 
     public String getUserId() {
-        return userId;
+        return user_id;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserId(String user_id) {
+        this.user_id = user_id;
     }
 
-    public Date getRegisterDate() {
-        return registerDate;
+    public Timestamp getRegisterDate() {
+        return register_date;
     }
 
-    public void setRegisterDate(Date registerDate) {
-        this.registerDate = registerDate;
+    public void setRegisterDate(Timestamp register_date) {
+        this.register_date = register_date;
     }
-        
+
 }

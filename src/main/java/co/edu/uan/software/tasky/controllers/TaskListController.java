@@ -1,6 +1,6 @@
 package co.edu.uan.software.tasky.controllers;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,7 +42,7 @@ public class TaskListController {
      */
     @PostMapping("/tasklist")
     public ResponseEntity<TaskListEntity> createTaskList(@RequestBody TaskListEntity taskList) {
-        Date date = new Date(System.currentTimeMillis());
+        Timestamp date = new Timestamp(System.currentTimeMillis());
         String name = taskList.getName();
         String userId = taskList.getUserId();
         taskList.setRegisterDate(date);
@@ -76,13 +76,13 @@ public class TaskListController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/tasklist/userId/{userId}")
+    /* @GetMapping("/tasklist/userId/{userId}")
     public List<TaskListEntity> findTaskListUserId(@PathVariable("userId") String userId) {
         if (userId.isEmpty()) {
             new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return this.repo.findByUserId(userId);
-    }
+    } */
 
     /**
      * Updates an existing taskList in the database
