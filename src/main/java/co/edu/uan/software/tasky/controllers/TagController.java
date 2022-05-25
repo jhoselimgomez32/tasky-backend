@@ -95,7 +95,7 @@ public class TagController {
     @PutMapping("/tags/{id}")
     public ResponseEntity<TagEntity> updateTag(@PathVariable("id") UUID id, @RequestBody TagEntity tag) {
         if (repository.existsById(id)) {
-            tag.setId(id);
+            tag.setUid(id);
             return new ResponseEntity<TagEntity>(repository.save(tag), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
