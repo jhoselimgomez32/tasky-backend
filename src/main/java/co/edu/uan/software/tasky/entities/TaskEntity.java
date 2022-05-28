@@ -6,15 +6,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity(name = "TASK")
 public class TaskEntity {
-    private @Id @GeneratedValue(strategy = GenerationType.AUTO) UUID id;
+    // Be sure you are using this annotation ONLY in the variable definition
+    // and not in getters/setters
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
     private String descripcion;
-    private UUID userId;
     private UUID taskListId;
+    @ManyToOne
+    private Usuario usuario;
 
-    public TaskEntity() {}
+    public TaskEntity() {
+    }
 
     public UUID getTaskListId() {
         return taskListId;
@@ -24,25 +31,17 @@ public class TaskEntity {
         this.taskListId = taskListId;
     }
 
-    public UUID getUserId() {
-        return userId;
-    }
-
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
-
-    public TaskEntity(String descripValue, UUID userIdValue) {
+    public TaskEntity(String descripValue, Usuario userValue) {
         this.setDescripcion(descripValue);
-        this.setUserId(userIdValue);
+        this.setUsuario(userValue);
     }
 
     @Override
     public String toString() {
-        return "Task: { id: " + id + ", descripción: " +descripcion+ " }";
+        return "Task: { id: " + id + ", descripción: " + descripcion + " }";
     }
 
-    public @Id @GeneratedValue UUID getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -56,6 +55,20 @@ public class TaskEntity {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    /**
+     * @return Usuario return the usuario
+     */
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * @param usuario the usuario to set
+     */
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
 }

@@ -1,6 +1,7 @@
 package co.edu.uan.software.tasky.controllers;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.uan.software.tasky.entities.TaskEntity;
+import co.edu.uan.software.tasky.entities.Usuario;
 import co.edu.uan.software.tasky.repositories.TaskRepository;
+import co.edu.uan.software.tasky.repositories.UsuarioRepository;
 
 /**
  * This is the Rest Controller for the Task Entity. It provides basic CRUD
@@ -28,9 +31,11 @@ import co.edu.uan.software.tasky.repositories.TaskRepository;
 @RestController
 public class TaskController {
     private final TaskRepository repo;
+    private final UsuarioRepository usuariosRepo;
 
-    TaskController(TaskRepository r) {
+    TaskController(TaskRepository r, UsuarioRepository ur) {
         this.repo = r;
+        this.usuariosRepo = ur;
     }
 
     /**
@@ -42,6 +47,36 @@ public class TaskController {
     @PostMapping("/task")
     public ResponseEntity<TaskEntity> createTask(@RequestBody TaskEntity task) {
         return new ResponseEntity<>(this.repo.save(task), HttpStatus.CREATED);
+    }
+
+    /**
+     * Creates a new task for an specific user
+     * 
+     * @param task The new task
+     * @return Returns the task with an assigned PK
+     */
+    @PostMapping("/usuarios/{usuario_id}/tasks")
+    public ResponseEntity<TaskEntity> createUserTask(
+            @PathVariable(name = "usuario_id", required = true) UUID usuario_id, @RequestBody TaskEntity task) {
+        Optional<Usuario> usuario = usuariosRepo.findById(usuario_id);
+        if (!usuario.isPresent()) {
+            new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        task.setUsuario(usuario.get());
+        return new ResponseEntity<>(this.repo.save(task), HttpStatus.CREATED);
+    }
+
+    /**
+     * @return Returns all the tasks for a user.
+     */
+    @GetMapping("/usuarios/{usuario_id}/tasks")
+    public ResponseEntity<List<TaskEntity>> findUserTasks(
+            @PathVariable(name = "usuario_id", required = true) UUID usuario_id) {
+        Optional<Usuario> usuario = usuariosRepo.findById(usuario_id);
+        if (!usuario.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(usuario.get().getTasks(), HttpStatus.OK);
     }
 
     /**
@@ -68,26 +103,28 @@ public class TaskController {
      * Updates an existing taskList in the database
      * 
      * @param taskList The taskList to be updated
-     * @return Returns the taskList with all fields changed, or throws an exception if
+     * @return Returns the taskList with all fields changed, or throws an exception
+     *         if
      *         the entoty doesn't exist.
      */
     @PutMapping("/task/{id}")
     public ResponseEntity<TaskEntity> updateTask(@PathVariable("id") UUID taskId, @RequestBody TaskEntity task) {
         if (repo.existsById(taskId)) {
             task.setId(taskId);
-            /* TaskListController = new TaskListController();
-
-            Object idTaskList = taskList.findTaskList(task.getTaskListId());
-
-            if(task.getTaskListId() != null){
-                if(idTaskList == null){
-                    return new ResponseEntity<TaskEntity>(task, HttpStatus.NOT_FOUND);
-                }
-            }
-      
-            return new ResponseEntity<TaskEntity>(repo.save(task), HttpStatus.NOT_FOUND);
-           */
-          return new ResponseEntity<TaskEntity>(repo.save(task), HttpStatus.OK);
+            /*
+             * TaskListController = new TaskListController();
+             * 
+             * Object idTaskList = taskList.findTaskList(task.getTaskListId());
+             * 
+             * if(task.getTaskListId() != null){
+             * if(idTaskList == null){
+             * return new ResponseEntity<TaskEntity>(task, HttpStatus.NOT_FOUND);
+             * }
+             * }
+             * 
+             * return new ResponseEntity<TaskEntity>(repo.save(task), HttpStatus.NOT_FOUND);
+             */
+            return new ResponseEntity<TaskEntity>(repo.save(task), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -107,5 +144,5 @@ public class TaskController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    
+
 }

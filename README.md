@@ -1,6 +1,6 @@
 # Tasky
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9a79748fff724d02ba69da88b2af47a1)](https://www.codacy.com/gh/wjfatuan/tasky-backend/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=wjfatuan/tasky-backend&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9a79748fff724d02ba69da88b2af47a1)](https://www.codacy.com/gh/wjfatuan/tasky-backend/dashboard?utm_source=github.com&utm_medium=referral&utm_content=wjfatuan/tasky-backend&utm_campaign=Badge_Grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/9a79748fff724d02ba69da88b2af47a1)](https://www.codacy.com/gh/wjfatuan/tasky-backend/dashboard?utm_source=github.com&utm_medium=referral&utm_content=wjfatuan/tasky-backend&utm_campaign=Badge_Coverage)
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
@@ -43,13 +43,14 @@ Una vez tenga asignada una tarea del proyecto en Trello, puede contribuir a este
    - Presione enter, esto creara la copia local del repositorio
 
 3. Haga los cambios requeridos en la tarea y subalos usando el ciclo normal de Git (`git add`, `git commit`, y `git push`)
-    - En cada commit asegurese de poner un comentario adecuado para el cambio, incluyendo el número de su tarea. Por ejemplo:
 
-      ```git
-      git commit -m "Tarea U03: Se modifica la entidad XXXX agregando el campo YYYY"
-      ```
+   - En cada commit asegurese de poner un comentario adecuado para el cambio, incluyendo el número de su tarea. Por ejemplo:
 
-    - Revise el ejemplo `Dummy` si tiene dudas sobre como implementar el API.
+     ```git
+     git commit -m "Tarea U03: Se modifica la entidad XXXX agregando el campo YYYY"
+     ```
+
+   - Revise el ejemplo `Dummy` si tiene dudas sobre como implementar el API.
 
 4. Haga una solicitud de cambios (también conocido como Pull Resuqet o PR) al repositorio principal. En este punto los cambios que hizo deben estar funcionando localmente.
 
@@ -68,14 +69,14 @@ Una vez tenga asignada una tarea del proyecto en Trello, puede contribuir a este
 
 La siguiente tabla muestra la estructura de carpetas/paquetes del proyecto. **Asegurese de poner su código en la carpeta correcta**. Si duranta euna revisión de código encuentra que sus compañero cometio un error pongalo como comentario en su revisión de código.
 
-| Carpeta | Descripción |
-|---------|-------------|
-|`src/main`|Código fuente de la aplicación|
-|`src/test`|Código fuente de las pruebas|
-|`src/main/java/co/edu/uan/software/tasky`|Paquete principal de la aplicación|
-|`src/main/java/co/edu/uan/software/tasky/entities`|Pauqete de entidades: Ponga acá las clases de entidad del proyecto|
-|`src/main/java/co/edu/uan/software/tasky/controllers`|Paquete de controladores: Ponga acá los controladores del proyecto|
-|`src/main/java/co/edu/uan/software/tasky/repositories`|Paquete de repositorios: Ponga acá las clases de repositorio del proyecto|
+| Carpeta                                                | Descripción                                                               |
+| ------------------------------------------------------ | ------------------------------------------------------------------------- |
+| `src/main`                                             | Código fuente de la aplicación                                            |
+| `src/test`                                             | Código fuente de las pruebas                                              |
+| `src/main/java/co/edu/uan/software/tasky`              | Paquete principal de la aplicación                                        |
+| `src/main/java/co/edu/uan/software/tasky/entities`     | Pauqete de entidades: Ponga acá las clases de entidad del proyecto        |
+| `src/main/java/co/edu/uan/software/tasky/controllers`  | Paquete de controladores: Ponga acá los controladores del proyecto        |
+| `src/main/java/co/edu/uan/software/tasky/repositories` | Paquete de repositorios: Ponga acá las clases de repositorio del proyecto |
 
 ## Compilar y ejecutar su aplicación
 
@@ -83,7 +84,7 @@ Para probar de forma local su aplicación siga los siguientes pasos:
 
 1. Asegurese de que su código no contiene errores.
 
-2. Modifique su archivo .env con los siguientes datos: 
+2. Modifique su archivo .env con los siguientes datos:
 
    ```bash
    SPRING_DATASOURCE_URL=jdbc:h2:mem:testdb
@@ -101,16 +102,52 @@ Para probar de forma local su aplicación siga los siguientes pasos:
 
 4. Desde la terminal ejecute el siguiente comando para inciar el servidor de forma local:
 
+   - Con Heroku:
+
    ```bash
    heroku local
    ```
 
-5. Ahora puede consumir el API usando su herramienta favorita. Se recomienda usar `curl` o **[Postman](https://www.postman.com/)**.
-    - Por ejemplo, para consultar los dummy usando el API dummy de ejemplo, puede usar:
+   - Con Spring Boot (asegurese de poner las variables de ambiente del archivo `.env` en su sistema):
 
-    ```bash
-    curl -X GET http://localhost:5000/dummies
-    ```
+   ```bash
+   ./gradlew bootRun
+   ```
+
+5. Ahora puede consumir el API usando su herramienta favorita. Se recomienda usar `curl` o **[Postman](https://www.postman.com/)**.
+
+   - Por ejemplo, para consultar los dummy usando el API dummy de ejemplo, puede usar:
+
+   ```bash
+   curl -X GET http://localhost:5000/dummies
+   ```
+
+   - para crear una nueva tarea puede usar:
+
+   ```bash
+   curl --location --request POST 'http://localhost:5000/task' \
+     --header 'Content-Type: application/json' \
+     --data-raw '{
+        "descripcion": "Lorem ipsum dolor",
+        "userId": null,
+        "taskListId": null,
+        "usuario": {
+           "uid": "8f474bf6-4d1b-42da-bf21-65bd76e04e60"
+        }
+     }'
+   ```
+
+   - o también puede usar:
+
+   ```bash
+   curl --location --request POST 'http://localhost:5000/usuarios/8f474bf6-4d1b-42da-bf21-65bd76e04e60/tasks' \
+     --header 'Content-Type: application/json' \
+     --data-raw '{
+        "descripcion": "User task",
+        "userId": null,
+        "taskListId": null
+     }'
+   ```
 
 ## Verificar la calidad del código
 
