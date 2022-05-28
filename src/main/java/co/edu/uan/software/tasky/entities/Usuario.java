@@ -1,7 +1,8 @@
 package co.edu.uan.software.tasky.entities;
 
-
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -9,12 +10,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name = "usuarios")
 public class Usuario {
-    
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private  UUID uid;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID uid;
     @Column(name = "nombre_usuario", nullable = false)
     private String nombreUsuario;
     @Column(nullable = false)
@@ -25,17 +30,23 @@ public class Usuario {
     private String correoElectronico;
     @Column(name = "fecha_creacion")
     private Timestamp fechaCreacion;
+    @OneToMany(mappedBy = "usuario") // this means usuario is a variable in the Task class
+    @JsonIgnore // this is important to avoid an infinite recursion in the relation
+    private List<TaskEntity> tasks;
 
-    public Usuario() {}
+    public Usuario() {
+
+    }
 
     public Usuario(String usuario, String contrasena) {
         this.nombreUsuario = usuario;
-        this. contrasena = contrasena;
+        this.contrasena = contrasena;
+        this.tasks = new ArrayList<>();
     }
 
     @Override
     public String toString() {
-        return "Usuario: {"+nombreUsuario+"}";
+        return "Usuario: {" + nombreUsuario + "}";
     }
 
     /**
@@ -134,6 +145,27 @@ public class Usuario {
      */
     public void setFechaCreacion(Timestamp fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+
+    /**
+     * @return List<TaskEntity> return the tasks
+     */
+    public List<TaskEntity> getTasks() {
+        return tasks;
+    }
+
+    /**
+     * @param tasks the tasks to set
+     */
+    public void setTasks(List<TaskEntity> tasks) {
+        this.tasks = tasks;
+    }
+
+    /**
+     * @param task the tasks to add
+     */
+    public void addTask(TaskEntity task) {
+        this.tasks.add(task);
     }
 
 }
