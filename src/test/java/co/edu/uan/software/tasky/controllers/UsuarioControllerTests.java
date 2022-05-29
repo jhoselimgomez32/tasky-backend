@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -37,14 +39,16 @@ public class UsuarioControllerTests {
 
     @BeforeEach
     public void init() {
+        repo.deleteAll();
         usuario1 = repo.save(new Usuario("john.doe", "strongpassword"));
         usuario2 = repo.save(new Usuario("john.doe", "strongpassword"));
     }
 
-    @Test
-    public void createUsuario() throws Exception {
+    @ParameterizedTest
+    @CsvSource({"john.doe,strongpassword"})
+    public void createUsuario(String username, String password) throws Exception {
         String url = "http://localhost:" + port + "/usuarios";
-        HttpEntity<Usuario> request = new HttpEntity<>(new Usuario("john.doe", "strongpassword"));
+        HttpEntity<Usuario> request = new HttpEntity<>(new Usuario(username, password));
         ResponseEntity<Usuario> response = restTemplate.exchange(url, HttpMethod.POST, request, Usuario.class);
         assertNotNull(response.getBody());
         assertNotNull(response.getBody().getUid());
@@ -53,13 +57,24 @@ public class UsuarioControllerTests {
         assertNotNull(response.getBody().getNombreUsuario());
         assertEquals(201, response.getStatusCodeValue());
         assertEquals("john.doe", response.getBody().getNombreUsuario());
+        // password is hashed with MD5
         assertEquals("F93FC10472A31BB3061AA0B45E228C5A", response.getBody().getContrasena());
     }
 
-    @Test
-    public void createInvalidUsuario() throws Exception {
+    @ParameterizedTest
+    @CsvSource({
+        "john.doe,", // password null
+        "john.doe,''", // password empty
+        ",strongpassword", // username null
+        "'',strongpassword", // username empty
+        "'',", // username empty and password null
+        ",''", // username null and password empty
+        "'',''", // both  empty
+        "," // both null
+    })
+    public void createInvalidUsuario(String username, String password) throws Exception {
         String url = "http://localhost:" + port + "/usuarios";
-        HttpEntity<Usuario> request = new HttpEntity<>(new Usuario());
+        HttpEntity<Usuario> request = new HttpEntity<>(new Usuario(username, password));
         ResponseEntity<Usuario> response = restTemplate.exchange(url, HttpMethod.POST, request, Usuario.class);
         assertEquals(400, response.getStatusCodeValue());
         assertNull(response.getBody());
@@ -86,6 +101,39 @@ public class UsuarioControllerTests {
         assertEquals("john.doe", response.getBody().getNombreUsuario());
         assertNull(response.getBody().getContrasena());
         System.out.println(response.getBody());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "john.doe,", // password null
+        "john.doe,''", // password empty
+        ",strongpassword", // username null
+        "'',strongpassword", // username empty
+        "'',", // username empty and password null
+        ",''", // username null and password empty
+        "'',''", // both  empty
+        "," // both null
+    })
+    public void invalidAuthenticate(String username, String password) throws Exception {
+        String url = "http://localhost:" + port + "/auth";
+        HttpEntity<Usuario> request = new HttpEntity<>(new Usuario(username, password));
+        ResponseEntity<Usuario> response = restTemplate.exchange(url, HttpMethod.POST, request, Usuario.class);
+        assertNull(response.getBody());
+        assertEquals(400, response.getStatusCodeValue());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "nonexistinguser,password", // invalid user
+        "john.doe,invalidpassword", // invalid password
+        "nonexistinguser,invalidpassword", // both invalid
+    })
+    public void failedAuthenticate(String username, String password) throws Exception {
+        String url = "http://localhost:" + port + "/auth";
+        HttpEntity<Usuario> request = new HttpEntity<>(new Usuario(username, password));
+        ResponseEntity<Usuario> response = restTemplate.exchange(url, HttpMethod.POST, request, Usuario.class);
+        assertNull(response.getBody());
+        assertEquals(401, response.getStatusCodeValue());
     }
 
     @Test

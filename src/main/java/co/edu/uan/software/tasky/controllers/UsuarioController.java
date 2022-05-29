@@ -35,11 +35,12 @@ public class UsuarioController {
      * Creates a new user in the database
      * 
      * @param dummy The new user
-     * @return Returns the dummy with an assigned PK
+     * @return Returns the user with an assigned PK
      */
     @PostMapping("/usuarios")
-    public ResponseEntity<Usuario> createDummy(@RequestBody Usuario usuario) throws Exception {
-        if(usuario.getNombreUsuario()==null || usuario.getContrasena()==null)
+    public ResponseEntity<Usuario> createUser(@RequestBody Usuario usuario) throws Exception {
+        if(usuario.getNombreUsuario()==null || usuario.getContrasena()==null ||
+           usuario.getNombreUsuario().isEmpty() || usuario.getContrasena().isEmpty())
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         String md5Hex = DigestUtils
                 .md5DigestAsHex(usuario.getContrasena().getBytes()).toUpperCase();
@@ -51,7 +52,7 @@ public class UsuarioController {
     }
 
     /**
-     * @return Returns all the dummies in database.
+     * @return Returns all the users in database.
      */
     @GetMapping("/usuarios")
     public List<Usuario> findAllusuarios() {
@@ -72,17 +73,17 @@ public class UsuarioController {
 
     @PostMapping("/auth")
     public ResponseEntity<Usuario> authenticate(@RequestBody Usuario usuario) {
-        ExampleMatcher ignoringExampleMatcher = ExampleMatcher.matchingAny()
-                .withMatcher("nombreUsuario", ExampleMatcher.GenericPropertyMatchers.exact());
-        Example<Usuario> example = Example.of(usuario, ignoringExampleMatcher);
-        List<Usuario> usuarios = repo.findAll(example);
+        if(usuario.getNombreUsuario()==null || usuario.getContrasena()==null ||
+           usuario.getNombreUsuario().isEmpty() || usuario.getContrasena().isEmpty())
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        List<Usuario> usuarios = repo.findByNombreUsuario(usuario.getNombreUsuario());
         // Check if a user exists
         if(usuarios.isEmpty()) 
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         Usuario result = usuarios.get(0);
         // Check if a password is different
         if (!result.getContrasena().equals(usuario.getContrasena()))
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         result.setContrasena(null);
         return new ResponseEntity<Usuario>(result, HttpStatus.OK);
     }
