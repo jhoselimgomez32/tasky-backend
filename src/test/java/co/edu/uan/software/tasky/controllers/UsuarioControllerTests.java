@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -58,13 +57,12 @@ public class UsuarioControllerTests {
     }
 
     @Test
-    @Disabled
     public void createInvalidUsuario() throws Exception {
         String url = "http://localhost:" + port + "/usuarios";
         HttpEntity<Usuario> request = new HttpEntity<>(new Usuario());
         ResponseEntity<Usuario> response = restTemplate.exchange(url, HttpMethod.POST, request, Usuario.class);
         assertEquals(400, response.getStatusCodeValue());
-        assertNotNull(response.getBody());
+        assertNull(response.getBody());
     }
 
     @Test

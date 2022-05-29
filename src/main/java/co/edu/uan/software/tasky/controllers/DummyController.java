@@ -42,6 +42,8 @@ public class DummyController {
      */
     @PostMapping("/dummies")
     public ResponseEntity<DummyEntity> createDummy(@RequestBody DummyEntity dummy) {
+        if(dummy.getDummyValue()==null || dummy.getDummyValue().isEmpty())
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(this.repo.save(dummy), HttpStatus.CREATED);
     }
 

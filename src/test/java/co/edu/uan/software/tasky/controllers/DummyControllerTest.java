@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -57,13 +56,12 @@ public class DummyControllerTest {
     }
 
     @Test
-    @Disabled
     public void createInvalidDummy() throws Exception {
         String url = "http://localhost:"+port+"/dummies";
         HttpEntity<DummyEntity> request = new HttpEntity<>(new DummyEntity());
         ResponseEntity<DummyEntity> response = restTemplate.exchange(url, HttpMethod.POST, request, DummyEntity.class);
         assertEquals(400, response.getStatusCodeValue());
-        assertNotNull(response.getBody());
+        assertNull(response.getBody());
     }
 
     @Test
