@@ -7,13 +7,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.Type;
+
 /**
  * Dummy Entity, don't use it. It's an exmaple.
  */
 @Entity(name = "dummy")
 public class DummyEntity {
 
-    private @Id @GeneratedValue(strategy = GenerationType.AUTO) UUID id;
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Type(type="org.hibernate.type.UUIDCharType")
+    private UUID id;
     private String dummyValue;
 
     public DummyEntity() {}
