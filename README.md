@@ -140,7 +140,8 @@ Para probar de forma local su aplicación siga los siguientes pasos:
    - o también puede usar:
 
    ```bash
-   curl --location --request POST 'http://localhost:5000/usuarios/8f474bf6-4d1b-42da-bf21-65bd76e04e60/tasks' \
+   curl --location --request POST \
+     'http://localhost:5000/usuarios/8f474bf6-42da-bf21-65bd76e04e60/tasks'\
      --header 'Content-Type: application/json' \
      --data-raw '{
         "descripcion": "User task",
