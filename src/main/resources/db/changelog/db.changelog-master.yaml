@@ -87,3 +87,31 @@ databaseChangeLog:
               -  column:  
                   name:  register_date  
                   type:  timestamp
+  - changeSet:
+      id: wjfatuan3
+      author: wjfatuan
+      changes:
+        - createTable:
+            tableName: tasks
+            columns:
+              - column:
+                  name: id
+                  type: varchar(128)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: descripcion
+                  type: varchar(256)
+              - column:
+                  name: task_list_id
+                  type: varchar(128)
+              - column:
+                  name: usuario_uid
+                  type: varchar(128)
+        - addForeignKeyConstraint:
+            baseColumnNames: usuario_uid
+            baseTableName: tasks
+            constraintName: fk_tasks_usuario
+            referencedColumnNames: uid
+            referencedTableName: usuarios
