@@ -46,3 +46,44 @@ databaseChangeLog:
               -  column:  
                   name:  fecha_creacion  
                   type:  timestamp
+  -  changeSet:  
+      id:  v3  
+      author:  Larcos64  
+      changes:  
+        -  createTable:  
+            tableName:  tags  
+            columns:  
+              -  column:  
+                  name:  uid  
+                  type:  varchar(128)  
+                  constraints:  
+                    primaryKey:  true  
+                    nullable:  false
+              -  column:  
+                  name:  name  
+                  type:  varchar(64)
+              -  column:
+                  name:  color  
+                  type:  varchar(64)
+  -  changeSet:  
+      id:  v4  
+      author:  Larcos64  
+      changes:  
+        -  createTable:  
+            tableName:  tasklist
+            columns:  
+              -  column:  
+                  name:  uid  
+                  type:  varchar(128)  
+                  constraints:  
+                    primaryKey:  true  
+                    nullable:  false
+              -  column:  
+                  name:  name  
+                  type:  varchar(64)
+              -  column:
+                  name:  user_id  
+                  type:  varchar(64)
+              -  column:  
+                  name:  register_date  
+                  type:  timestamp

@@ -13,7 +13,7 @@
     "env": {
       "LIQUIBASE_ENABLED": {
         "description": "A secret key to enable Liquibase schema management. Use false locally when using H2 database.",
-        "value": "true"
+        "value": "false"
       }
     }
   }
