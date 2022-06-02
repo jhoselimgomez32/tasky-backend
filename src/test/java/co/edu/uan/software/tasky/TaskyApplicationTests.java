@@ -1,6 +1,6 @@
 package co.edu.uan.software.tasky;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,7 +10,7 @@ class TaskyApplicationTests {
 
 	@Test
 	void contextLoads() {
-		assertTrue(2==2);
+		assertEquals(4,2+2);
 	}
 
 }
