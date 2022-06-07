@@ -12,7 +12,9 @@ import javax.persistence.Id;
 @Entity(name = "tasklist")
 public class TaskListEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id 
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "uid", nullable = false)
     private UUID uid;
     @Column(name = "name", nullable = false)
     private String name;
@@ -35,7 +37,7 @@ public class TaskListEntity {
     }
 
     public UUID getId() {
-        return uid;
+        return this.uid;
     }
 
     public void setId(UUID uid) {
